@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$SYNOPKG_PKG_STATUS" ==  "UPGRADE" -o -f "/tmp/traccar.upgrade" ]; then
+	exit 0
+fi
+
+rm -rf /usr/syno/synoman/webman/3rdparty/traccar
+
+exit 0

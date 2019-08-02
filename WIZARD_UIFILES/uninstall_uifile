@@ -1,0 +1,18 @@
+[{
+	"step_title": "Remove Traccar database",
+	"items": [{
+		"type": "multiselect",
+		"desc": "If you remove the Traccar database, all data will be deleted",
+		"subitems": [{
+			"key": "pkgwizard_remove_mysql",
+			"desc": "Remove Traccar database"
+		}]
+	}, {
+		"type": "password",
+		"desc": "Please provide root password to remove the Traccar database",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root password"
+		}]
+	}]
+}]

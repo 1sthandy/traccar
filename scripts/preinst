@@ -1,0 +1,43 @@
+#!/bin/sh
+
+if [ -d /opt -a -f /opt/bin/ipkg ] ; then
+		if [ -z "$JAVA_HOME" ] ; then
+			if [ -f "/opt/bin/gettext" ] ; then
+				    if [ -f "/opt/bin/tr" ] ; then
+						exit 0
+					else
+						if [ "$SYNOPKG_DSM_LANGUAGE" = "ger" ] ; then
+							cat `dirname $0`/coreutils_de.txt > $SYNOPKG_TEMP_LOGFILE
+						else
+							cat `dirname $0`/coreutils_en.txt > $SYNOPKG_TEMP_LOGFILE
+						fi
+						exit 1
+					fi
+				else
+					if [ "$SYNOPKG_DSM_LANGUAGE" = "ger" ] ; then
+						cat `dirname $0`/gettext_de.txt > $SYNOPKG_TEMP_LOGFILE
+					else
+						cat `dirname $0`/gettext_en.txt > $SYNOPKG_TEMP_LOGFILE
+					fi
+					exit 1
+				fi
+		else
+		if [ "$SYNOPKG_DSM_LANGUAGE" = "ger" ] ; then
+			cat `dirname $0`/java_de.txt > $SYNOPKG_TEMP_LOGFILE
+		else
+			cat `dirname $0`/java_en.txt > $SYNOPKG_TEMP_LOGFILE
+		fi
+		exit 1
+	fi
+
+else
+	if [ "$SYNOPKG_DSM_LANGUAGE" = "ger" ] ; then
+		cat `dirname $0`/ipkg_de.txt > $SYNOPKG_TEMP_LOGFILE
+	else
+		cat `dirname $0`/ipkg_en.txt > $SYNOPKG_TEMP_LOGFILE
+	fi
+	exit 1
+fi
+
+
+

@@ -1,0 +1,118 @@
+#!/bin/sh
+SERVICETOOL="/usr/syno/bin/servicetool"
+# Package
+PACKAGE="traccar"
+
+if [ "$SYNOPKG_PKG_STATUS" ==  "UPGRADE" -o -f "/tmp/traccar.upgrade" ]; then
+	exit 0
+fi
+
+# Remove firewall config
+    if [ "${SYNOPKG_PKG_STATUS}" == "UNINSTALL" ]; then
+        ${SERVICETOOL} --remove-configure-file --package ${PACKAGE}.sc >> /dev/null
+    fi
+
+# Get DSM Version & Set MYSQL
+[ -f "/etc.defaults/VERSION" ] || exit 1
+DSM_VERSION=`grep ^majorversion= /etc.defaults/VERSION | cut -d'"' -f2`
+[ -z "$DSM_VERSION" ] && exit 1
+
+# Set RunMySQL & MYSQL
+if [ $DSM_VERSION -eq 4 ]; then
+	RunMySQL=`/bin/get_key_value /etc/synoinfo.conf runmysql`
+	MYSQL="/usr/syno/mysql/bin/mysql"
+else
+	[ -f /var/packages/MariaDB/enabled ] && RunMySQL="yes" || RunMySQL="no"
+	MYSQL="/usr/bin/mysql"
+fi
+
+if [ "x$RunMySQL" != "xyes" ]; then
+	exit 0
+fi
+
+echo $pkgwizard_mysql_password > $$
+pkgwizard_mysql_password=`sed 's/"/\\"/gp' $$`
+/bin/rm -f $$
+
+if [ "$pkgwizard_remove_mysql" != "true" ]; then
+	exit 0
+fi
+
+$MYSQL -u root --password="${pkgwizard_mysql_password}" -e "DROP DATABASE traccar";
+if [ $? -eq "1" ]; then
+	if [ -z $SYNOPKG_DSM_LANGUAGE ]; then
+		echo "But traccar database remove unsuccessfully" > $SYNOPKG_TEMP_LOGFILE
+		exit 0;
+	fi
+	case $SYNOPKG_DSM_LANGUAGE in
+		chs)
+			echo "然而，您无法删除 traccar 数据库，因为密码输入错误。" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		cht)
+			echo "然而，您無法刪除 traccar 資料庫，因為密碼輸入錯誤。" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		csy)
+			echo "Nemůžete však odstranit databázi traccar kvůli špatnému heslu." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		dan)
+			echo "Du kan dog ikke slette traccar-databasen på grund af den forkerte adgangskode." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		enu)
+			echo "However, you cannot delete the traccar database due to the wrong password." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		fre)
+			echo "Cependant, vous ne pouvez pas supprimer la base de données traccar en raison du mot de passe erroné." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ger)
+			echo "Die traccar-Datenbank kann nicht gelöscht werden, weil das Passwort nicht korrekt ist." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		hun)
+			echo "A traccar–adatbázis viszont a rossz jelszó miatt nem törölhető." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ita)
+			echo "Tuttavia, è impossibile eliminare il database traccar a causa di password errata." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		jpn)
+			echo "ただし、パスワードが正しくないので traccar データベースを削除できません。" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		krn)
+			echo "그러나 패스워드가 잘못되어 traccar 데이터베이스를 삭제할 수 없습니다." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		nld)
+			echo "U kunt de traccar-database niet verwijderen als gevolg van het verkeerde wachtwoord." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		nor)
+			echo "Du kan imildertid ikke slette traccar-databasen på grunn av feil passord." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		plk)
+			echo "Nie można usunąć bazy danych traccar, ponieważ hasło jest nieprawidłowe." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ptb)
+			echo "Contudo, você não pode excluir o banco de dados do traccar por causa da senha incorreta." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ptg)
+			echo "No entanto, não pode eliminar a base de dados traccar devido à palavra-passe errada." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		rus)
+			echo "Однако вы не сможете удалить базу данных traccar из-за неверного пароля." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		spn)
+			echo "No obstante, no puede eliminar la base de datos de traccar por ser errónea la contraseña." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		sve)
+			echo "Du kan dock inte radera traccar databas på grund av fel lösenord." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		trk)
+			echo "Ancak, yanlış parola yüzünden traccar veritabanını silenezsiniz." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		*)
+			echo "But traccar database remove unsuccessfully" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+	esac
+	exit 0;
+fi
+$MYSQL -u root --password="${pkgwizard_mysql_password}" -e "DROP USER traccar@127.0.0.1";
+$MYSQL -u root --password="${pkgwizard_mysql_password}" -e "FLUSH PRIVILEGES";
+
+
+exit 0

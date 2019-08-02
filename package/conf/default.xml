@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
+
+<properties>
+
+    <!-- SERVER CONFIG -->
+
+    <entry key='web.enable'>true</entry>
+    <entry key='web.port'>55000</entry>
+	<entry key='web.path'>./web</entry>
+    <entry key='web.cacheControl'>max-age=3600,public</entry>
+	
+	<entry key='geocoder.enable'>false</entry>
+    <entry key='geocoder.type'>google</entry>
+    
+	<entry key='logger.enable'>true</entry>
+    <entry key='logger.level'>all</entry>
+	
+    
+	<entry key='filter.enable'>true</entry>
+    <entry key='filter.future'>86400</entry>
+
+    <entry key='event.enable'>true</entry>
+    <entry key='event.ignoreDuplicateAlerts'>true</entry>
+    <entry key='processing.computedAttributes.enable'>true</entry>
+    <entry key='processing.engineHours.enable'>true</entry>
+
+    <entry key='media.path'>./media</entry>
+
+    <entry key='notificator.types'>web,mail</entry>
+
+    <entry key='server.statistics'>https://www.traccar.org/analytics/</entry>
+
+    <entry key='commands.queueing'>true</entry>
+	
+    <!-- DATABASE CONFIG -->
+
+    
+    <entry key='database.ignoreUnknown'>true</entry>
+
+    <entry key='database.generateQueries'>true</entry>
+
+    <entry key='database.loginUser'>
+        SELECT * FROM tc_users
+        WHERE email = :email OR login = :email
+    </entry>
+
+    <entry key='database.selectPositions'>
+        SELECT * FROM tc_positions WHERE deviceId = :deviceId AND fixTime BETWEEN :from AND :to ORDER BY fixTime
+    </entry>
+
+    <entry key='database.selectLatestPositions'>
+        SELECT tc_positions.* FROM tc_positions INNER JOIN tc_devices ON tc_positions.id = tc_devices.positionid;
+    </entry>
+
+    <entry key='database.updateLatestPosition'>
+        UPDATE tc_devices SET positionId = :id WHERE id = :deviceId
+    </entry>
+
+    <entry key='database.selectEvents'>
+        SELECT * FROM tc_events WHERE deviceId = :deviceId AND serverTime BETWEEN :from AND :to ORDER BY serverTime
+    </entry>
+
+    <entry key='database.deletePositions'>
+        DELETE FROM tc_positions WHERE serverTime &lt; :serverTime AND id NOT IN (SELECT positionId FROM tc_devices WHERE positionId IS NOT NULL)
+    </entry>
+
+    <entry key='database.deleteEvents'>
+        DELETE FROM tc_events WHERE serverTime &lt; :serverTime
+    </entry>
+
+    <entry key='database.selectStatistics'>
+        SELECT * FROM tc_statistics WHERE captureTime BETWEEN :from AND :to ORDER BY captureTime
+    </entry>
+
+
+    <!-- PROTOCOL CONFIG -->
+
+    <entry key='gps103.port'>55001</entry>
+    <entry key='tk103.port'>55002</entry>
+    <entry key='gl100.port'>55003</entry>
+    <entry key='gl200.port'>55004</entry>
+    <entry key='t55.port'>55005</entry>
+    <entry key='xexun.port'>55006</entry>
+    <entry key='xexun.extended'>false</entry>
+    <entry key='totem.port'>55007</entry>
+    <entry key='enfora.port'>55008</entry>
+    <entry key='meiligao.port'>55009</entry>
+    <entry key='trv.port'>55010</entry>
+    <entry key='suntech.port'>55011</entry>
+    <entry key='progress.port'>55012</entry>
+    <entry key='h02.port'>55013</entry>
+    <entry key='jt600.port'>55014</entry>
+    <entry key='huabao.port'>55015</entry>
+    <entry key='v680.port'>55016</entry>
+    <entry key='pt502.port'>55017</entry>
+    <entry key='tr20.port'>55018</entry>
+    <entry key='navis.port'>55019</entry>
+    <entry key='meitrack.port'>55020</entry>
+    <entry key='skypatrol.port'>55021</entry>
+    <entry key='gt02.port'>55022</entry>
+    <entry key='gt06.port'>55023</entry>
+    <entry key='megastek.port'>55024</entry>
+    <entry key='navigil.port'>55025</entry>
+    <entry key='gpsgate.port'>55026</entry>
+    <entry key='teltonika.port'>55027</entry>
+    <entry key='mta6.port'>55028</entry>
+    <entry key='tzone.port'>55029</entry>
+    <entry key='tlt2h.port'>55030</entry>
+    <entry key='taip.port'>55031</entry>
+    <entry key='wondex.port'>55032</entry>
+    <entry key='cellocator.port'>55033</entry>
+    <entry key='galileo.port'>55034</entry>
+    <entry key='ywt.port'>55035</entry>
+    <entry key='tk102.port'>55036</entry>
+    <entry key='intellitrac.port'>55037</entry>
+    <entry key='gpsmta.port'>55038</entry>
+    <entry key='wialon.port'>55039</entry>
+    <entry key='carscop.port'>55040</entry>
+    <entry key='apel.port'>55041</entry>
+    <entry key='manpower.port'>55042</entry>
+    <entry key='globalsat.port'>55043</entry>
+    <entry key='atrack.port'>55044</entry>
+    <entry key='pt3000.port'>55045</entry>
+    <entry key='ruptela.port'>55046</entry>
+    <entry key='topflytech.port'>55047</entry>
+    <entry key='laipac.port'>55048</entry>
+    <entry key='aplicom.port'>55049</entry>
+    <entry key='gotop.port'>55050</entry>
+    <entry key='sanav.port'>55051</entry>
+    <entry key='gator.port'>55052</entry>
+    <entry key='noran.port'>55053</entry>
+    <entry key='m2m.port'>55054</entry>
+    <entry key='osmand.port'>55055</entry>
+    <entry key='easytrack.port'>55056</entry>
+    <entry key='gpsmarker.port'>55057</entry>
+    <entry key='khd.port'>55058</entry>
+    <entry key='piligrim.port'>55059</entry>
+    <entry key='stl060.port'>55060</entry>
+    <entry key='cartrack.port'>55061</entry>
+    <entry key='minifinder.port'>55062</entry>
+    <entry key='haicom.port'>55063</entry>
+    <entry key='eelink.port'>55064</entry>
+    <entry key='box.port'>55065</entry>
+    <entry key='freedom.port'>55066</entry>
+    <entry key='telic.port'>55067</entry>
+    <entry key='trackbox.port'>55068</entry>
+    <entry key='visiontek.port'>55069</entry>
+    <entry key='orion.port'>55070</entry>
+    <entry key='riti.port'>55071</entry>
+    <entry key='ulbotech.port'>55072</entry>
+    <entry key='tramigo.port'>55073</entry>
+    <entry key='tr900.port'>55074</entry>
+    <entry key='ardi01.port'>55075</entry>
+    <entry key='xt013.port'>55076</entry>
+    <entry key='autofon.port'>55077</entry>
+    <entry key='gosafe.port'>55078</entry>
+    <entry key='tt8850.port'>55079</entry>
+    <entry key='bce.port'>55080</entry>
+    <entry key='xirgo.port'>55081</entry>
+    <entry key='calamp.port'>55082</entry>
+    <entry key='mtx.port'>55083</entry>
+    <entry key='tytan.port'>55084</entry>
+    <entry key='avl301.port'>55085</entry>
+    <entry key='castel.port'>55086</entry>
+    <entry key='mxt.port'>55087</entry>
+    <entry key='cityeasy.port'>55088</entry>
+    <entry key='aquila.port'>55089</entry>
+    <entry key='flextrack.port'>55090</entry>
+    <entry key='blackkite.port'>55091</entry>
+    <entry key='adm.port'>55092</entry>
+    <entry key='watch.port'>55093</entry>
+    <entry key='t800x.port'>55094</entry>
+    <entry key='upro.port'>55095</entry>
+    <entry key='auro.port'>55096</entry>
+    <entry key='disha.port'>55097</entry>
+    <entry key='thinkrace.port'>55098</entry>
+    <entry key='pathaway.port'>55099</entry>
+    <entry key='arnavi.port'>55100</entry>
+    <entry key='nvs.port'>55101</entry>
+    <entry key='kenji.port'>55102</entry>
+    <entry key='astra.port'>55103</entry>
+    <entry key='homtecs.port'>55104</entry>
+    <entry key='fox.port'>55105</entry>
+    <entry key='gnx.port'>55106</entry>
+    <entry key='arknav.port'>55107</entry>
+    <entry key='supermate.port'>55108</entry>
+    <entry key='appello.port'>55109</entry>
+    <entry key='idpl.port'>55110</entry>
+    <entry key='huasheng.port'>55111</entry>
+    <entry key='l100.port'>55112</entry>
+    <entry key='granit.port'>55113</entry>
+    <entry key='carcell.port'>55114</entry>
+    <entry key='obddongle.port'>55115</entry>
+    <entry key='hunterpro.port'>55116</entry>
+    <entry key='raveon.port'>55117</entry>
+    <entry key='cradlepoint.port'>55118</entry>
+    <entry key='arknavx8.port'>55119</entry>
+    <entry key='autograde.port'>55120</entry>
+    <entry key='oigo.port'>55121</entry>
+    <entry key='jpkorjar.port'>55122</entry>
+    <entry key='cguard.port'>55123</entry>
+    <entry key='fifotrack.port'>55124</entry>
+    <entry key='smokey.port'>55125</entry>
+    <entry key='extremtrac.port'>55126</entry>
+    <entry key='trakmate.port'>55127</entry>
+    <entry key='at2000.port'>55128</entry>
+    <entry key='maestro.port'>55129</entry>
+	<entry key='ais.port'>55130</entry>
+    <entry key='gt30.port'>55131</entry>
+    <entry key='tmg.port'>55132</entry>
+    <entry key='pretrace.port'>55133</entry>
+    <entry key='pricol.port'>55134</entry>
+	<entry key='siwi.port'>55135</entry>
+    <entry key='starlink.port'>55136</entry>
+    <entry key='dmt.port'>55137</entry>
+    <entry key='xt2400.port'>55138</entry>
+    <entry key='dmthttp.port'>55139</entry>
+    <entry key='alematics.port'>55140</entry>
+    <entry key='gps056.port'>55141</entry>
+    <entry key='flexcomm.port'>55142</entry>
+    <entry key='vt200.port'>55143</entry>
+    <entry key='owntracks.port'>55144</entry>
+    <entry key='vtfms.port'>55145</entry>
+	<entry key='tlv.port'>55146</entry>
+    <entry key='esky.port'>55147</entry>
+	<entry key='genx.port'>55148</entry>
+    <entry key='flespi.port'>55149</entry>
+    <entry key='dway.port'>55150</entry>
+    <entry key='recoda.port'>55151</entry>
+    <entry key='oko.port'>55152</entry>
+    <entry key='ivt401.port'>55153</entry>
+    <entry key='sigfox.port'>55154</entry>
+    <entry key='t57.port'>55155</entry>
+	<entry key='spot.port'>55156</entry>
+    <entry key='m2c.port'>55157</entry>
+    <entry key='austinnb.port'>55158</entry>
+    <entry key='opengts.port'>55159</entry>
+    <entry key='cautela.port'>55160</entry>
+    <entry key='continental.port'>55161</entry>
+    <entry key='egts.port'>55162</entry>
+    <entry key='robotrack.port'>55163</entry>
+    <entry key='pt60.port'>55164</entry>
+    <entry key='telemax.port'>55165</entry>
+    <entry key='sabertek.port'>55166</entry>
+    <entry key='retranslator.port'>55167</entry>
+    <entry key='svias.port'>55168</entry>
+    <entry key='eseal.port'>55169</entry>
+    <entry key='freematics.port'>55170</entry>
+    <entry key='avema.port'>55171</entry>
+    <entry key='autotrack.port'>55172</entry>
+    <entry key='tek.port'>55173</entry>
+	 <entry key='wristband.port'>55174</entry>
+    <entry key='applet.port'>55175</entry>
+    <entry key='milesmate.port'>55176</entry>
+    <entry key='anytrek.port'>55177</entry>
+    <entry key='smartsole.port'>55178</entry>
+    <entry key='its.port'>55179</entry>
+    <entry key='xrb28.port'>55180</entry>
+    <entry key='c2stek.port'>55181</entry>
+    <entry key='nyitech.port'>55182</entry>
+    <entry key='neos.port'>55183</entry>
+    <entry key='satsol.port'>55184</entry>

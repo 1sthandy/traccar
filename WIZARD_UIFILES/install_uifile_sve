@@ -1,0 +1,11 @@
+[{
+	"step_title": "Ange MariaDB-lösenord",
+	"items": [{
+		"type": "password",
+		"desc": "Ange ditt MariaDB-lösenord",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root-lösenord"
+		}]
+	}]
+}]

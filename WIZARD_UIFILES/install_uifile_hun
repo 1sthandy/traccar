@@ -1,0 +1,11 @@
+[{
+	"step_title": "Adja meg a MariaDB-jelszót",
+	"items": [{
+		"type": "password",
+		"desc": "Adja meg MariaDB-jelszavát",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root jelszó"
+		}]
+	}]
+}]

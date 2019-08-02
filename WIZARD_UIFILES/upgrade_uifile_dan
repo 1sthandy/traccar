@@ -1,0 +1,11 @@
+[{
+	"step_title": "Indtast MariaDB-adgangskode",
+	"items": [{
+		"type": "password",
+		"desc": "Indtast din MariaDB-adgangskode",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root-adgangskode"
+		}]
+	}]
+}]

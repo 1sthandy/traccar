@@ -1,0 +1,11 @@
+[{
+	"step_title": "MariaDB parolasını girin",
+	"items": [{
+		"type": "password",
+		"desc": "MariaDB parolanızı girin",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root parolası"
+		}]
+	}]
+}]

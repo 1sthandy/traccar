@@ -1,0 +1,118 @@
+#!/bin/sh
+
+eval $(env | grep "^SYNOPKG_PKGDEST=")
+ret=`ln -s "${SYNOPKG_PKGDEST}/ui" /usr/syno/synoman/webman/3rdparty/traccar`
+ret=`chown -R admin.users $SYNOPKG_PKGDEST`
+
+SERVICETOOL="/usr/syno/bin/servicetool"
+# Package
+PACKAGE="traccar"
+FWPORTS="/var/packages/${PACKAGE}/scripts/${PACKAGE}.sc"
+
+# installation step1 database traccar
+TIMESTAMP="`/bin/date "+%s"`"
+echo $pkgwizard_mysql_password > $$
+pkgwizard_mysql_password=`sed 's/"/\\"/gp' $$`
+/bin/rm -f $$
+
+
+/var/packages/MariaDB/target/usr/bin/mysql -u root --password="${pkgwizard_mysql_password}" -e "create database if not exists traccar CHARSET=latin1";
+if [ $? -eq "1" ]; then
+	if [ -z $SYNOPKG_DSM_LANGUAGE ]; then
+		echo "Can't create mysql database 'traccar' due to non-default mysql root password. Please use phpMyAdmin to create the database and go traccar page to finish the installation process" > $SYNOPKG_TEMP_LOGFILE
+		exit 0;
+	fi
+	case $SYNOPKG_DSM_LANGUAGE in
+		chs)
+			echo "????? MySQL ??,???????" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		cht)
+			echo "????? MySQL ??,???????" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		csy)
+			echo "Zkontrolujte heslo MySQL a zkuste to znovu." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		dan)
+			echo "Kontroller din MySQL-adgangskode, og prøv igen." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		enu)
+			echo "Please check your MySQL password and try again." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		fre)
+			echo "Veuillez vérifier votre mot de passe MySQL et réessayer." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ger)
+			echo "Prüfen Sie Ihr MySQL-Passwort und versuchen Sie es erneut." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		hun)
+			echo "Ellenorizze MySQL–jelszavát, majd próbálja újra." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ita)
+			echo "Controllare la password MySQL e riprovare." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		jpn)
+			echo "MySQL ???????????????????????" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		krn)
+			echo "MySQL ????? ???? ?? ??????." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		nld)
+			echo "Controleer uw MySQL-wachtwoord en probeer het opnieuw." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		nor)
+			echo "Vennligst sjekk MySQL-passordet og prøv igjen." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		plk)
+			echo "Sprawdz swoje haslo MySQL i spróbuj ponownie." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ptb)
+			echo "Verifique sua senha MySQL e tente novamente." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		ptg)
+			echo "Verifique a sua palavra-passe do MySQL e tente novamente." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		rus)
+			echo "????????? ?????? MySQL ? ????????? ???????." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		spn)
+			echo "Compruebe su contraseña de MySQL y vuelva a intentarlo." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		sve)
+			echo "Kontrollera ditt MySQL-lösenord och försök igen." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		trk)
+			echo "Lütfen MySQL parolanizi kontrol edin ve yeniden deneyin." > $SYNOPKG_TEMP_LOGFILE 
+		;;
+		*)
+			echo "Check your MySQL password" > $SYNOPKG_TEMP_LOGFILE 
+		;;
+	esac
+	if [ -f /tmp/traccar.upgrade ]; then
+		/bin/rm /tmp/traccar.upgrade
+	fi
+	exit 1;
+
+fi
+#add traccar dbuser
+/var/packages/MariaDB/target/usr/bin/mysql -u root --password="${pkgwizard_mysql_password}" -e "create user traccar@127.0.0.1";
+/var/packages/MariaDB/target/usr/bin/mysql -u root --password="${pkgwizard_mysql_password}" -e "set password for traccar@127.0.0.1 = password('traccar')";
+/var/packages/MariaDB/target/usr/bin/mysql -u root --password="${pkgwizard_mysql_password}" -e "grant all on traccar.* to traccar@127.0.0.1";
+
+chmod +x ${SYNOPKG_PKGDEST}/traccar.sh
+
+#add traccar config url to xml
+echo "$(date +%d.%m.%y_%H:%M:%S): traccar start installation" >> ${SYNOPKG_PKGDEST}/traccar_package.log
+	
+	
+    echo "	<entry key='web.path'>${SYNOPKG_PKGDEST}/web</entry>" >> ${SYNOPKG_PKGDEST}/conf/default.xml
+	echo "	<entry key='logger.file'>${SYNOPKG_PKGDEST}/logs/tracker-server.log</entry>" >> ${SYNOPKG_PKGDEST}/conf/default.xml
+	echo "	<entry key='database.changelog'>${SYNOPKG_PKGDEST}/schema/changelog-master.xml</entry>" >> ${SYNOPKG_PKGDEST}/conf/default.xml
+	echo "	</properties>" >> ${SYNOPKG_PKGDEST}/conf/default.xml
+	echo "	<entry key='config.default'>${SYNOPKG_PKGDEST}/conf/default.xml</entry>" >> ${SYNOPKG_PKGDEST}/conf/traccar.xml
+	echo "	</properties>" >> ${SYNOPKG_PKGDEST}/conf/traccar.xml
+echo "$(date +%d.%m.%y_%H:%M:%S): traccar finish konfiguration" >> ${SYNOPKG_PKGDEST}/traccar_package.log
+# Add firewall config
+    ${SERVICETOOL} --install-configure-file --package ${FWPORTS} >> /dev/null
+
+
+exit 0 

@@ -1,0 +1,1 @@
+gettext is not installed. Please install gettext via CLI or if available, via the Package Center.

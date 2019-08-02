@@ -1,0 +1,11 @@
+[{
+	"step_title": "輸入 MariaDB 密碼",
+	"items": [{
+		"type": "password",
+		"desc": "輸入 MariaDB 密碼",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root 密碼"
+		}]
+	}]
+}]

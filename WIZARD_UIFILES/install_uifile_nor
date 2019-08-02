@@ -1,0 +1,11 @@
+[{
+	"step_title": "Skriv inn MariaDB-password",
+	"items": [{
+		"type": "password",
+		"desc": "Skriv inn MariaDB-passord",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root-password"
+		}]
+	}]
+}]

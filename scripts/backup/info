@@ -1,0 +1,4 @@
+{
+	"online_backup": false,
+	"cancel_mode": "interrupt_self_rollback"
+}

@@ -1,0 +1,15 @@
+{
+	".url": {
+		"SYNO.SDS.traccar": {
+			"type": "url",
+			"allUsers": true,
+			"title": "app:app_name",
+			"desc": "app:description",
+			"icon": "images/traccar_{0}.png",
+			"texts": "texts",
+			"protocol": "http",
+			"url": "/",
+			"port": "55000"
+		}
+	}
+}

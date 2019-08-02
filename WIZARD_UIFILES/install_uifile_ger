@@ -1,0 +1,11 @@
+[{
+	"step_title": "Geben Sie das MariaDB-Passwort ein",
+	"items": [{
+		"type": "password",
+		"desc": "Geben Sie Ihr MariaDB-Passwort ein",
+		"subitems": [{
+			"key": "pkgwizard_mysql_password",
+			"desc": "Root-Passwort"
+		}]
+	}]
+}]

@@ -1,0 +1,93 @@
+Note:
+For Upgrade from Traccar 2.x all Data will be lost !!
+You have to delete First all old Traccarfiles and remove the old TraccarDatabase
+It is not recommended to use the ForkUI from http://traccar.litvak.su
+
+Differences with Default Traccar:
+    web interface port is 55000
+    ports are in Range 55000 – 55999 because, the port range 5000 – 5999 is reserved for Synology services
+	Package use mariadb and dbuser traccar
+	
+	Version 4.3-022 - 05.08.2018
+    - include all upgrades to Version 4.3
+	- add new Version traccar 4.3 https://www.traccar.org/blog/traccar-4-3/
+	
+	Version 4-021 - 05.08.2018
+    - add new Version traccar 4 
+	- include all upgrades to Version 4 
+	
+	Version 3.16-020 - 18.04.2018
+    - add new Version traccar 3.16 https://www.traccar.org/blog/traccar-3-16/	
+	
+	Version 3.15-019 - 27.01.2018
+    - add new Version traccar 3.15 https://www.traccar.org/blog/traccar-3-15/	
+	
+	Version 3.14-018 - 08.10.2017
+    - add new Version traccar 3.14 https://www.traccar.org/blog/traccar-3-14/	
+	
+	Version 3.13-017 - 09.07.2017
+    - add new Version traccar 3.13 https://www.traccar.org/blog/traccar-3-13/	
+	- new Start Stop
+	
+	Version 3.10-016 - 17.02.2017
+    - add new Version traccar 3.10 https://www.traccar.org/blog/traccar-3-10/	
+	- new Start Stop
+	
+	Version 3.10-015 - 11.02.2017
+    - add new Version traccar 3.10 https://www.traccar.org/blog/traccar-3-10/	
+	
+Version 3.9-014 - 09.02.2017
+    - add new Version traccar 3.9 https://www.traccar.org/blog/traccar-3-9/	
+	- new Start Stop
+	- new Java Path
+	- new Uninstall
+		
+Version 3.8-013 - 22.11.2016
+    - add new Version traccar 3.8 https://www.traccar.org/blog/traccar-3-8/	
+	
+Version 3.7-012 - 18.10.2016
+    - add Router Firewallkonfiguration Option
+	
+Version 3.7-011 - 11.09.2016
+    - add new Version traccar 3.7 https://www.traccar.org/blog/traccar-3-7/
+	
+Version 3.6-010 - 12.08.2016
+	- update wrapper Version
+	
+Version 3.6-009 - 20.07.2016
+    - add new Version traccar 3.6 https://www.traccar.org/blog/traccar-3-6/
+	
+Version 3.5-008 - 19.04.2016
+	- Bugfix https://github.com/tananaev/traccar/issues/1881 
+	
+Version 3.5-007 - 09.04.2016
+	- add new Version traccar 3.5
+	
+Version 3.4-006 - 09.04.2016
+	- fix DSM 6.0 no Database is created on installation
+	
+Version 3.4-005 - 06.03.2016
+	- add new Version traccar 3.4
+
+Version 3.3-004 - 19.01.2016
+	- upload to cphub.net
+	- add deinstall UI to remove database
+	- add upgrade UI
+	- fixed Backup & Replication
+	- add all in one noarch Version
+	
+Version 3.3-003 - 07.01.2016 Testing
+	- add new Version traccar 3.3
+	- remove update script, it is now integrated
+	- add traccar DB User
+	- change DB-character set from UTF8 to Latin1 
+
+Version 3.2-002 - 18.12.2015 Testing
+     - insert update script for traccar2.x -> traccar3.2
+	 - going back to orig UI
+	 - ipkg fix
+	 - Start/Stop fix
+	 - add Backupfunction Backup UI
+	 
+Version 3.2-001 - 15.12.2015 Testing
+     - initial commit

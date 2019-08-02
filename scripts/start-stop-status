@@ -1,0 +1,40 @@
+#!/bin/sh
+LOG="/var/packages/${SYNOPKG_PKGNAME}/target/traccar_package.log"
+STATUS="/var/packages/${SYNOPKG_PKGNAME}/target/tmp/traccar.status"
+
+SERVICE_NAME=traccar
+PATH_TO_JAR=${SYNOPKG_PKGDEST}/tracker-server.jar
+PATH_TO_CONF=${SYNOPKG_PKGDEST}/conf/traccar.xml
+PID_PATH_NAME=${SYNOPKG_PKGDEST}/tmp/traccar-pid
+
+
+#Synology Setting
+source /etc/profile
+
+
+case $1 in
+	start)
+
+
+		sh ${SYNOPKG_PKGDEST}/traccar.sh start >> ${SYNOPKG_PKGDEST}/traccar_package.log
+		#echo "$(date +%d.%m.%y_%H:%M:%S): traccar started" >> ${SYNOPKG_PKGDEST}/traccar_package.log
+		
+		echo "traccar STARTED" > ${SYNOPKG_PKGDEST}/tmp/traccar.status
+		# exit 0
+	;;
+	stop)
+	
+	sh ${SYNOPKG_PKGDEST}/traccar.sh stop >> ${SYNOPKG_PKGDEST}/traccar_package.log
+		#echo "$(date +%d.%m.%y_%H:%M:%S): traccar stopped" >> ${SYNOPKG_PKGDEST}/traccar_package.log
+		echo "traccar STOPPED" > ${SYNOPKG_PKGDEST}/tmp/traccar.status
+		# exit 0
+	;;
+	status)
+		if tail -1 $STATUS |grep STARTED; then exit 0; else exit 1; fi
+	;;
+	log)
+		#echo "Traccar is installed properly. To access it, click icon under 'admin' menu">> $LOG
+		echo "$LOG"
+	;;
+esac
+                                     
